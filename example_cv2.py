@@ -6,15 +6,17 @@ import numpy as np
 
 class Extractor:
 
-    orb=cv2.ORB_create()
-
     def kp(self,image):
-        kp=cv2.goodFeaturesToTrack(image,maxCorners=1000, qualityLevel=0.01, minDistance=1)
+        grey=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+        kp=cv2.goodFeaturesToTrack(grey,maxCorners=700, qualityLevel=0.01, minDistance=3)
+        kp=kp.tolist()
+        
         for k in kp:
-            x,y=map(lambda x: int(round(x)), k.pt)
+            x,y=map(lambda x: int(round(x)), k[0])
             print(f'({x}:{y})')
+          #  x,y=355,245
             cv2.circle(image, (x,y), 3, (0,255,0), 1)
-            return image 
+        return image 
 
 
 #webcam = cv2.VideoCapture(0)
@@ -22,7 +24,7 @@ class Extractor:
 while True:
 
    # ret, frame = webcam.read()
-    frame=cv2.imread('car.jpg',0)
+    frame=cv2.imread('car.jpg',1)
     extractor=Extractor()
     frame1=extractor.kp(frame)
     cv2.imshow('img',frame1)
