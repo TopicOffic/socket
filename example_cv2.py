@@ -19,12 +19,11 @@ class Extractor:
         return image 
 
 
-#webcam = cv2.VideoCapture(0)
+webcam = cv2.VideoCapture(0)
 
 while True:
 
-   # ret, frame = webcam.read()
-    frame=cv2.imread('car.jpg',1)
+    ret, frame = webcam.read()
     extractor=Extractor()
     frame1=extractor.kp(frame)
     cv2.imshow('img',frame1)
@@ -32,5 +31,5 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-#webcam.release()
+webcam.release()
 cv2.destroyAllWindows()
